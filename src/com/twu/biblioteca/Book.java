@@ -24,4 +24,8 @@ public class Book {
         this.borrowed = false;
         this.borrowed_to = null;
     }
+
+    public String bookDetails() {
+        return "Author: " + author + ", published in: " + year_of_publish;
+    }
 }

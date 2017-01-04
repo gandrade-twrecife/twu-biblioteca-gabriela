@@ -1,12 +1,33 @@
 package com.twu.biblioteca;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class BibliotecaApp {
 
+    public ArrayList<Book> books = new ArrayList<Book>();
+    private String welcome_message = "Welcome to the Biblioteca!";
+    private String customer;
+    ArrayList<Book> borrowed_books;
+
     public BibliotecaApp(){}
 
-    public ArrayList<Book> books = new ArrayList<Book>();
+    public void whoAreYou() {
+        System.out.println("Please type you name.");
+        Scanner input = new Scanner()
+    }
+
+    public void showInitialMenu() {
+        System.out.println(welcome_message);
+        System.out.println("You have borrowed " + borrowed_books.size() + " books.");
+        System.out.println("Choose one of the following options (type its number)");
+        System.out.println("1: List Books");
+        System.out.println("Or type Quit to exit Biblioteca.");
+    }
+
+    public void quitBiblioteca() {
+        System.out.println("Thank you for visiting! Come by again!");
+    }
 
     public void checkoutBook(int book_index, String customer) {
         books.get(book_index).checkout(customer);
