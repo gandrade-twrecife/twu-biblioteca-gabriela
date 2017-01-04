@@ -26,6 +26,16 @@ public class BibliotecaApp {
         return not_borrowed_books;
     }
 
+    public ArrayList<Book> getBooksBorrowedByCustomer(String customer) {
+        ArrayList<Book> borrowed_by_customer = new ArrayList<Book>();
+        for(int i = 0; i < books.size(); i++) {
+            if (books.get(i).borrowed_to == customer) {
+                borrowed_by_customer.add(books.get(i));
+            }
+        }
+        return borrowed_by_customer;
+    }
+
     public static void main(String[] args) {
         System.out.println("Hello, world!");
     }

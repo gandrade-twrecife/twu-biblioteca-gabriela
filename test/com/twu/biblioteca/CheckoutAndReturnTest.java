@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
 
-public class CheckoutTest {
+public class CheckoutAndReturnTest {
 
     BibliotecaApp library = new BibliotecaApp();
     Book book1 = new Book("Programming in Java", "Gabriela Andrade", 2005);

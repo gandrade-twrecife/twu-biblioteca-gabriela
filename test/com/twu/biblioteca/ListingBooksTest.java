@@ -37,4 +37,14 @@ public class ListingBooksTest {
         assertEquals(this.not_borrowed_books, not_borrowed_books);
         tearDown();
     }
+
+    @Test
+    public void listBorrowedByCustomerTest() {
+        setUp();
+        ArrayList<Book> borrowed_by_me = library.getBooksBorrowedByCustomer("Customer A");
+        ArrayList<Book> expected = new ArrayList<Book>(1);
+        expected.add(book1);
+        assertEquals(expected, borrowed_by_me);
+        tearDown();
+    }
 }
