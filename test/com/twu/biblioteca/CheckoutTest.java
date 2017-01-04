@@ -2,9 +2,7 @@ package com.twu.biblioteca;
 
 
 import org.junit.Test;
-
 import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 public class CheckoutTest {
@@ -47,6 +45,31 @@ public class CheckoutTest {
         assertTrue(book.borrowed);
         assertEquals("Customer A", book.borrowed_to);
         book.returnBook();
+        assertFalse(book.borrowed);
+        assertNull(book.borrowed_to);
+        tearDown();
+    }
+
+    @Test
+    public void libraryCheckoutTest() {
+        setUp();
+        Book book = library.books.get(1);
+        assertFalse(book.borrowed);
+        assertNull(book.borrowed_to);
+        library.checkoutBook(1, "Customer A");
+        assertTrue(book.borrowed);
+        assertEquals("Customer A", book.borrowed_to);
+        tearDown();
+    }
+
+    @Test
+    public void libraryReturnTest() {
+        setUp();
+        Book book = library.books.get(1);
+        book.checkout("Customer A");
+        assertTrue(book.borrowed);
+        assertEquals("Customer A", book.borrowed_to);
+        library.returnBook(1);
         assertFalse(book.borrowed);
         assertNull(book.borrowed_to);
         tearDown();
