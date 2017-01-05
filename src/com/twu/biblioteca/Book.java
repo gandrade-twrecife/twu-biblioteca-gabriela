@@ -3,14 +3,14 @@ package com.twu.biblioteca;
 public class Book {
     public String title;
     public String author;
-    public int year_of_publish;
+    public int year_published;
     public boolean borrowed;
     public String borrowed_to;
 
-    public Book(String title, String author, int year_of_publish) {
+    public Book(String title, String author, int year_published) {
         this.title = title;
         this.author = author;
-        this.year_of_publish = year_of_publish;
+        this.year_published = year_published;
         this.borrowed = false;
         this.borrowed_to = null;
     }
@@ -26,6 +26,6 @@ public class Book {
     }
 
     public String bookDetails() {
-        return "Author: " + author + ", published in: " + year_of_publish;
+        return "Author: " + author + ", published in: " + year_published;
     }
 }

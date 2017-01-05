@@ -19,6 +19,7 @@ public class CheckoutAndReturnTest {
         books.add(book2);
         books.add(book3);
         library.books = books;
+        library.customer = "Customer A";
     }
 
     private void tearDown() {
@@ -56,7 +57,7 @@ public class CheckoutAndReturnTest {
         Book book = library.books.get(1);
         assertFalse(book.borrowed);
         assertNull(book.borrowed_to);
-        library.checkoutBook(1, "Customer A");
+        library.checkoutBook(1);
         assertTrue(book.borrowed);
         assertEquals("Customer A", book.borrowed_to);
         tearDown();
