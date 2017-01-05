@@ -14,8 +14,8 @@ public class ListingBooksTest {
     ArrayList<Book> borrowed_books = new ArrayList<Book>();
 
     private void setUp() {
+        book1.checkout();
         all_books.add(book1);
-        book1.checkout("Customer A");
         all_books.add(book2);
         all_books.add(book3);
         library.books = all_books;
@@ -31,20 +31,25 @@ public class ListingBooksTest {
     }
 
     @Test
-    public void listAllNotBorrowedTest() {
+    public void listAllAvailableBooksTest() {
         setUp();
-        ArrayList<Book> not_borrowed_books = library.getNotBorrowedBooks();
+        ArrayList<Book> not_borrowed_books = library.getAvailableBooks();
         assertEquals(this.not_borrowed_books, not_borrowed_books);
         tearDown();
     }
 
     @Test
-    public void listBorrowedByCustomerTest() {
-        setUp();
-        ArrayList<Book> borrowed_by_me = library.getBooksBorrowedByCustomer("Customer A");
-        ArrayList<Book> expected = new ArrayList<Book>(1);
-        expected.add(book1);
-        assertEquals(expected, borrowed_by_me);
+    public void listEmptyLibrary() {
+        library.books = all_books;
+        ArrayList<Book> not_borrowed_books = library.getAvailableBooks();
+        assertEquals(this.not_borrowed_books, not_borrowed_books);
+        tearDown();
+    }
+
+    @Test
+    public void listNullLibrary() {
+        ArrayList<Book> not_borrowed_books = library.getAvailableBooks();
+        assertEquals(this.not_borrowed_books, not_borrowed_books);
         tearDown();
     }
 }
