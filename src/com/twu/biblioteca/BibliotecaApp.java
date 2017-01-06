@@ -60,7 +60,7 @@ public class BibliotecaApp {
             book_list += "\nThere are no available books in Biblioteca.";
         }
         for (int i = 0; i < available_books.size(); i++) {
-            book_list += "\n" + i + ": " + available_books.get(i).title;
+            book_list += "\n" + i + ": " + available_books.get(i).getTitle();
         }
         book_list += "\nType Back to go back.";
         return book_list;
@@ -68,9 +68,9 @@ public class BibliotecaApp {
 
     public void showBookDetails(Book book) {
         System.out.println("DETAILS:");
-        System.out.println("Title: " + book.title);
-        System.out.println("Author: " + book.author);
-        System.out.println("Year published: " + book.year_published);
+        System.out.println("Title: " + book.getTitle());
+        System.out.println("Author: " + book.getAuthor());
+        System.out.println("Year published: " + book.getYearPublished());
         String choice = "";
 
         do {
