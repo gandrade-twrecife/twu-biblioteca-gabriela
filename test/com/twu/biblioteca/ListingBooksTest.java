@@ -9,47 +9,47 @@ public class ListingBooksTest {
     Book book1 = new Book("Programming in Java", "Gabriela Andrade", 2005);
     Book book2 = new Book("Programming in C#", "Gabriela Andrade", 2006);
     Book book3 = new Book("Test Driven Development", "Gabriela Andrade", 2007);
-    ArrayList<Book> all_books = new ArrayList<Book>();
-    ArrayList<Book> not_borrowed_books = new ArrayList<Book>();
-    ArrayList<Book> borrowed_books = new ArrayList<Book>();
+    ArrayList<Book> allBooks = new ArrayList<Book>();
+    ArrayList<Book> notBorrowedBooks = new ArrayList<Book>();
+    ArrayList<Book> borrowedBooks = new ArrayList<Book>();
 
     private void setUp() {
         book1.checkout();
-        all_books.add(book1);
-        all_books.add(book2);
-        all_books.add(book3);
-        library.books = all_books;
-        not_borrowed_books.add(book2);
-        not_borrowed_books.add(book3);
-        borrowed_books.add(book1);
+        allBooks.add(book1);
+        allBooks.add(book2);
+        allBooks.add(book3);
+        library.books = allBooks;
+        notBorrowedBooks.add(book2);
+        notBorrowedBooks.add(book3);
+        borrowedBooks.add(book1);
     }
 
     private void tearDown() {
-        all_books = new ArrayList<Book>();
-        not_borrowed_books = new ArrayList<Book>();
-        borrowed_books = new ArrayList<Book>();
+        allBooks = new ArrayList<Book>();
+        notBorrowedBooks = new ArrayList<Book>();
+        borrowedBooks = new ArrayList<Book>();
     }
 
     @Test
     public void listAllAvailableBooksTest() {
         setUp();
-        ArrayList<Book> not_borrowed_books = library.getAvailableBooks();
-        assertEquals(this.not_borrowed_books, not_borrowed_books);
+        ArrayList<Book> notBorrowedBooks = library.getAvailableBooks();
+        assertEquals(this.notBorrowedBooks, notBorrowedBooks);
         tearDown();
     }
 
     @Test
     public void listEmptyLibrary() {
-        library.books = all_books;
-        ArrayList<Book> not_borrowed_books = library.getAvailableBooks();
-        assertEquals(this.not_borrowed_books, not_borrowed_books);
+        library.books = allBooks;
+        ArrayList<Book> notBorrowedBooks = library.getAvailableBooks();
+        assertEquals(this.notBorrowedBooks, notBorrowedBooks);
         tearDown();
     }
 
     @Test
     public void listNullLibrary() {
-        ArrayList<Book> not_borrowed_books = library.getAvailableBooks();
-        assertEquals(this.not_borrowed_books, not_borrowed_books);
+        ArrayList<Book> notBorrowedBooks = library.getAvailableBooks();
+        assertEquals(this.notBorrowedBooks, notBorrowedBooks);
         tearDown();
     }
 }

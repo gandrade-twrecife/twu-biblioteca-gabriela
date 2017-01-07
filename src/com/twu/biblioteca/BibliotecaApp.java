@@ -7,63 +7,62 @@ public class BibliotecaApp {
 
     Scanner input = new Scanner(System.in);
     public ArrayList<Book> books = new ArrayList<Book>();
-    private String welcome_message = "Welcome to the Biblioteca!";
+    public final String welcomeMessage = "Welcome to the Biblioteca!";
+    public final String rootMessage = "Type what is before the colon (:) to select the option.";
 
     public BibliotecaApp(){}
 
-    public void startMenu() {
-        System.out.println(welcome_message);
-        String choice;
-        while (true) {
-            System.out.println("Choose one of the following options (type its number)");
-            System.out.println("1: List Books");
-            System.out.println("Or type Quit to exit Biblioteca.");
-            choice = input.next();
-            if (choice.equals("Quit")) break;
-            else if (choice.equals("1")) {
-                listBooksMenu();
-            }
-            else {
-                System.out.println("Select a valid option!");
-            }
-        }
-        quitBiblioteca();
+    public String startMenu() {
+        return welcomeMessage + "\n" + ("Choose one of the following options (type its number)\n") +
+                "1: List Books\n" + "Or type Quit to exit Biblioteca.\n";
     }
 
-    public void listBooksMenu() {
-        ArrayList<Book> available_books = getAvailableBooks();
+    public String getOutputForThisInput(String userInput) {
+        if (userInput.equals("Quit")) return quitBiblioteca();
+        else if (userInput.equals("1")) {
+            return listBooksMenu();
+        }
+        else {
+            return ("Select a valid option!");
+        }
+    }
+
+    public String listBooksMenu() {
+        ArrayList<Book> availableBooks = getAvailableBooks();
         String choice;
 
         while (true) {
-            String book_list = listBooks();
-            System.out.println(book_list);
+            String bookList = listBooks();
+            System.out.println(bookList);
             choice = input.next();
-            int chosen_book = available_books.size();
+            int chosenBook = availableBooks.size();
             if (choice.equals("Back")) break;
+            if (choice.equals("Quit")) quitBiblioteca();
             try {
-                chosen_book = Integer.parseInt(choice);
+                chosenBook = Integer.parseInt(choice);
             } catch (NumberFormatException ex) {
                 System.out.println("This is not a number, select a valid option!");
             }
-            if (chosen_book < available_books.size()) {
-                showBookDetails(available_books.get(chosen_book));
+            if (chosenBook < availableBooks.size()) {
+                showBookDetails(availableBooks.get(chosenBook));
             } else {
                 System.out.println("Select a valid option!");
             }
         }
+        return "";
     }
 
     public String listBooks() {
-        String book_list = "Type a book's number to see details (title, author and year published):";
-        ArrayList<Book> available_books = getAvailableBooks();
-        if (available_books.size() == 0) {
-            book_list += "\nThere are no available books in Biblioteca.";
+        String bookList = "Type a book's number to see details (title, author and year published):";
+        ArrayList<Book> availableBooks = getAvailableBooks();
+        if (availableBooks.size() == 0) {
+            bookList += "\nThere are no available books in Biblioteca.";
         }
-        for (int i = 0; i < available_books.size(); i++) {
-            book_list += "\n" + i + ": " + available_books.get(i).getTitle();
+        for (int i = 0; i < availableBooks.size(); i++) {
+            bookList += "\n" + i + ": " + availableBooks.get(i).getTitle();
         }
-        book_list += "\nType Back to go back.";
-        return book_list;
+        bookList += "\nType Back to go back.";
+        return bookList;
     }
 
     public void showBookDetails(Book book) {
@@ -88,8 +87,10 @@ public class BibliotecaApp {
         } while (!choice.equals("Y") & !choice.equals("N"));
     }
 
-    public void quitBiblioteca() {
+    public static String quitBiblioteca() {
         System.out.println("Thank you for visiting! Come by again!");
+        System.exit(0);
+        return "";
     }
 
     public String checkoutBook(Book book) {
@@ -111,19 +112,74 @@ public class BibliotecaApp {
     }
 
     public ArrayList<Book> getAvailableBooks() {
-        ArrayList<Book> not_borrowed_books = new ArrayList<Book>();
+        ArrayList<Book> notBorrowedBooks = new ArrayList<Book>();
         if (books != null) {
             for (int i = 0; i < books.size(); i++) {
                 if (!books.get(i).isBorrowed()) {
-                    not_borrowed_books.add(books.get(i));
+                    notBorrowedBooks.add(books.get(i));
                 }
             }
         }
-        return not_borrowed_books;
+        return notBorrowedBooks;
+    }
+
+    public static String addCharsToTheLeft(String word, int amount, char character) {
+        StringBuffer output = new StringBuffer();
+        for (int i = 0; i < amount; i++) {
+            output.append(character);
+        }
+        return output.append(word).toString();
+    }
+
+    public static String addCharsToTheRight(String word, int amount, char character) {
+        StringBuffer output = new StringBuffer();
+        output.append(word);
+        for (int i = 0; i < amount; i++) {
+            output.append(character);
+        }
+        return output.toString();
+    }
+
+    public static String showFormattedBook(Book book) {
+        int sizeTitle = 40;
+        int sizeAuthor = 30;
+
+        int spacesToAdd = (sizeTitle - book.getTitle().length());
+        String formattedBook = addCharsToTheRight(book.getTitle(), spacesToAdd, ' ');
+
+        spacesToAdd = (sizeAuthor - book.getAuthor().length());
+        formattedBook += addCharsToTheRight(book.getAuthor(), spacesToAdd, ' ');
+
+        formattedBook += book.getYearPublished();
+
+        return formattedBook;
+    }
+
+    public static String formatNumbersEqualStringSize(Integer numberToFormat, int stringLenght) {
+        String formattedNumber = numberToFormat.toString();
+        int zerosToAdd = (stringLenght - formattedNumber.length());
+        formattedNumber = addCharsToTheRight(formattedNumber, zerosToAdd,' ');
+        return formattedNumber;
+    }
+
+    public static String[] showFormattedBookList(ArrayList<Book> books) {
+        int amountOfBooks = books.size();
+        String[] formattedBookList = new String[amountOfBooks];
+        for (int i = 0; i < amountOfBooks; i++) {
+            String index = formatNumbersEqualStringSize(i + 1, (amountOfBooks + "").length()) + ": ";
+            formattedBookList[i] = index + showFormattedBook(books.get(i));
+        }
+        return formattedBookList;
     }
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         BibliotecaApp app = new BibliotecaApp();
         app.startMenu();
+
+        while(true) {
+            String userInput = scanner.next();
+            app.getOutputForThisInput(userInput);
+        }
     }
 }

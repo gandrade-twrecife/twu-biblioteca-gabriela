@@ -1,6 +1,5 @@
 package com.twu.biblioteca;
 
-
 import org.junit.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
@@ -40,8 +39,8 @@ public class CheckoutAndReturnTest {
     public void bookCheckoutTest() {
         setUpAvailableBooks();
         Book book = library.books.get(1);
-        boolean attempt_to_checkout = book.checkout();
-        assertTrue(attempt_to_checkout);
+        boolean attemptToCheckout = book.checkout();
+        assertTrue(attemptToCheckout);
         assertTrue(book.isBorrowed());
         tearDown();
     }
@@ -50,8 +49,8 @@ public class CheckoutAndReturnTest {
     public void bookCheckoutBorrowedBookTest() {
         setUpBorrowedBooks();
         Book book = library.books.get(1);
-        boolean attempt_to_checkout = book.checkout();
-        assertFalse(attempt_to_checkout);
+        boolean attemptToCheckout = book.checkout();
+        assertFalse(attemptToCheckout);
         assertTrue(book.isBorrowed());
         tearDown();
     }
@@ -60,8 +59,8 @@ public class CheckoutAndReturnTest {
     public void bookReturnTest() {
         setUpBorrowedBooks();
         Book book = library.books.get(1);
-        boolean attempt_to_return = book.returnBook();
-        assertTrue(attempt_to_return);
+        boolean attemptToReturn = book.returnBook();
+        assertTrue(attemptToReturn);
         assertFalse(book.isBorrowed());
         tearDown();
     }
@@ -71,8 +70,8 @@ public class CheckoutAndReturnTest {
     public void bookReturnAvailableBookTest() {
         setUpAvailableBooks();
         Book book = library.books.get(1);
-        boolean attempt_to_return = book.returnBook();
-        assertFalse(attempt_to_return);
+        boolean attemptToReturn = book.returnBook();
+        assertFalse(attemptToReturn);
         assertFalse(book.isBorrowed());
         tearDown();
     }
@@ -82,8 +81,8 @@ public class CheckoutAndReturnTest {
         setUpAvailableBooks();
         Book book = library.books.get(1);
         assertFalse(book.isBorrowed());
-        String checkout_message = library.checkoutBook(book);
-        assertEquals("Thank you! Enjoy the book.", checkout_message);
+        String checkoutMessage = library.checkoutBook(book);
+        assertEquals("Thank you! Enjoy the book.", checkoutMessage);
         assertTrue(book.isBorrowed());
         tearDown();
     }
@@ -93,8 +92,8 @@ public class CheckoutAndReturnTest {
         setUpBorrowedBooks();
         Book book = library.books.get(1);
         assertTrue(book.isBorrowed());
-        String attempt_to_checkout = library.checkoutBook(book);
-        assertEquals("That book is not available.", attempt_to_checkout);
+        String attemptToCheckout = library.checkoutBook(book);
+        assertEquals("That book is not available.", attemptToCheckout);
         assertTrue(book.isBorrowed());
         tearDown();
     }
@@ -103,8 +102,8 @@ public class CheckoutAndReturnTest {
     public void libraryReturnTest() {
         setUpBorrowedBooks();
         Book book = library.books.get(1);
-        String attempt_to_return = library.returnBook(book);
-        assertEquals("Thank you for returning the book.", attempt_to_return);
+        String attemptToReturn = library.returnBook(book);
+        assertEquals("Thank you for returning the book.", attemptToReturn);
         assertFalse(book.isBorrowed());
         tearDown();
     }
@@ -113,8 +112,8 @@ public class CheckoutAndReturnTest {
     public void libraryReturnAvailableBookTest() {
         setUpAvailableBooks();
         Book book = library.books.get(1);
-        String attempt_to_return = library.returnBook(book);
-        assertEquals("That is not a valid book to return.", attempt_to_return);
+        String attemptToReturn = library.returnBook(book);
+        assertEquals("That is not a valid book to return.", attemptToReturn);
         assertFalse(book.isBorrowed());
         tearDown();
     }
