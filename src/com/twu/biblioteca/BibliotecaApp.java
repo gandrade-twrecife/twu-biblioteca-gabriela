@@ -9,6 +9,8 @@ public class BibliotecaApp {
     public ArrayList<Book> books = new ArrayList<Book>();
     public final String welcomeMessage = "Welcome to the Biblioteca!";
     public final String rootMessage = "Type what is before the colon (:) to select the option.";
+    int sizeOfBookTitles = 70;
+    int sizeOfBookAuthors = 50;
 
     public BibliotecaApp(){}
 
@@ -141,8 +143,8 @@ public class BibliotecaApp {
     }
 
     public static String showFormattedBook(Book book) {
-        int sizeTitle = 40;
-        int sizeAuthor = 30;
+        int sizeTitle = 70;
+        int sizeAuthor = 50;
 
         int spacesToAdd = (sizeTitle - book.getTitle().length());
         String formattedBook = addCharsToTheRight(book.getTitle(), spacesToAdd, ' ');

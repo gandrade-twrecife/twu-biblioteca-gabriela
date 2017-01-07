@@ -73,7 +73,7 @@ public class MenuOption {
     public MenuOption getOptionByUserInput(String input) {
         for (int i = 0; i < childOptions.size(); i++) {
             MenuOption currentChild = childOptions.get(i);
-            if (input.equals(currentChild.option)) {
+            if (input.toLowerCase().equals(currentChild.option.toLowerCase())) {
                 return currentChild;
             }
         }
@@ -90,30 +90,6 @@ public class MenuOption {
             listOfOptions += childOptions.get(i).title;
         }
         return listOfOptions;
-    }
-
-    public boolean equals(MenuOption optionToCompare) {
-        if (optionToCompare == null) return false;
-
-        boolean equalOption = (this.option != null & optionToCompare.option != null);
-        if (equalOption) equalOption = optionToCompare.option.equals(this.option);
-
-        boolean equalTitles = (this.title != null & optionToCompare.title != null);
-        if (equalTitles) equalTitles = optionToCompare.title.equals(this.title);
-
-        boolean equalMessage = (this.messageBeforeUserInput != null & optionToCompare.messageBeforeUserInput != null);
-        if (equalMessage) equalMessage = optionToCompare.messageBeforeUserInput.equals(this.messageBeforeUserInput);
-
-        boolean equalParent = (this.parent != null & optionToCompare.parent != null);
-        if (equalParent) equalParent = optionToCompare.parent.equals(this.parent);
-
-        boolean equalChildren = (this.childOptions != null & optionToCompare.childOptions != null);
-        if (equalChildren) equalChildren = optionToCompare.childOptions.equals(this.childOptions);
-
-        if (equalOption & equalTitles & equalMessage & equalParent & equalChildren)
-            return true;
-        else
-            return false;
     }
 
     public String toString() {

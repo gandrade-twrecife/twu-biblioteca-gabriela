@@ -34,7 +34,7 @@ public class BibliotecaTest {
 
     @Test
     public void showFormattedBookTest() {
-        String expected = "Programming in Java                     Gabriela Andrade              2005";
+        String expected = "Programming in Java                                                   Gabriela Andrade                                  2005";
         assertEquals(expected, library.showFormattedBook(bookProgrammingInJava));
     }
 
@@ -42,9 +42,9 @@ public class BibliotecaTest {
     public void showFormattedBookListTest() {
         setUp();
         String[] expected = {
-                "1: Programming in Java                     Gabriela Andrade              2005",
-                "2: Programming in C#                       Gabriela Andrade              2006",
-                "3: Test Driven Development                 Gabriela Andrade              2007"};
+                "1: Programming in Java                                                   Gabriela Andrade                                  2005",
+                "2: Programming in C#                                                     Gabriela Andrade                                  2006",
+                "3: Test Driven Development                                               Gabriela Andrade                                  2007"};
         assertArrayEquals(expected, library.showFormattedBookList(books));
     }
 
@@ -57,16 +57,16 @@ public class BibliotecaTest {
     public void showFormattedBookListWithHugeAmountOfBooks() {
         setUpHugeAmountOfSameBook();
         int indexToLookUp = 99;
-        String expected = "0" + indexToLookUp + ": Programming in Java                     Gabriela Andrade              2005";
+        String expected = indexToLookUp + " : Programming in Java                                                   Gabriela Andrade                                  2005";
         assertEquals(expected, library.showFormattedBookList(books)[indexToLookUp - 1]);
     }
 
     @Test
     public void formatNumbersToStringOfSameLenght() {
         assertEquals("1", library.formatNumbersEqualStringSize(1, 1));
-        assertEquals("01", library.formatNumbersEqualStringSize(1, 2));
-        assertEquals("001", library.formatNumbersEqualStringSize(1, 3));
-        assertEquals("0001", library.formatNumbersEqualStringSize(1, 4));
+        assertEquals("1 ", library.formatNumbersEqualStringSize(1, 2));
+        assertEquals("1  ", library.formatNumbersEqualStringSize(1, 3));
+        assertEquals("1   ", library.formatNumbersEqualStringSize(1, 4));
     }
 
     private void setUpHugeAmountOfSameBook() {
