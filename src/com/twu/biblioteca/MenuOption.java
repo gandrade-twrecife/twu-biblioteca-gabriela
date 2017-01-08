@@ -1,6 +1,8 @@
 package com.twu.biblioteca;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MenuOption {
     private MenuOption parent;
@@ -83,6 +85,8 @@ public class MenuOption {
     }
 
     public String listOptions() {
+        orderChildOptionsByTitle();
+
         String listOfOptions = "";
         if (childOptions.size() == 0) return "There are no options available.";
         for (int i = 0; i < childOptions.size(); i++) {
@@ -90,6 +94,14 @@ public class MenuOption {
             listOfOptions += childOptions.get(i).title;
         }
         return listOfOptions;
+    }
+
+    private void orderChildOptionsByTitle() {
+        Collections.sort(childOptions, new Comparator<MenuOption>() {
+            @Override public int compare(MenuOption option1, MenuOption option2) {
+                return option1.title.compareTo(option2.title);
+            }
+        });
     }
 
     public String toString() {

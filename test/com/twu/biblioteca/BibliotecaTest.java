@@ -12,20 +12,6 @@ public class BibliotecaTest {
     Book bookTDD = new Book("Test Driven Development", "Gabriela Andrade", 2007);
 
     @Test
-    public void addCharsToTheLeftTest() {
-        String original = "teste";
-        String expected = "     teste";
-        assertEquals(expected, library.addCharsToTheLeft(original, 5, ' '));
-    }
-
-    @Test
-    public void addZeroCharsToTheLeftTest() {
-        String original = "teste";
-        String expected = "teste";
-        assertEquals(expected, library.addCharsToTheLeft(original, 0, ' '));
-    }
-
-    @Test
     public void addCharsToTheRightTest() {
         String original = "teste";
         String expected = "teste     ";
@@ -39,26 +25,8 @@ public class BibliotecaTest {
     }
 
     @Test
-    public void showFormattedBookListTest() {
-        setUp();
-        String[] expected = {
-                "1: Programming in Java                                                   Gabriela Andrade                                  2005",
-                "2: Programming in C#                                                     Gabriela Andrade                                  2006",
-                "3: Test Driven Development                                               Gabriela Andrade                                  2007"};
-        assertArrayEquals(expected, library.showFormattedBookList(books));
-    }
-
-    @Test
     public void formatNumbersToStringOfLenght1() {
         assertEquals("1", library.formatNumbersEqualStringSize(1, 1));
-    }
-
-    @Test
-    public void showFormattedBookListWithHugeAmountOfBooks() {
-        setUpHugeAmountOfSameBook();
-        int indexToLookUp = 99;
-        String expected = indexToLookUp + " : Programming in Java                                                   Gabriela Andrade                                  2005";
-        assertEquals(expected, library.showFormattedBookList(books)[indexToLookUp - 1]);
     }
 
     @Test

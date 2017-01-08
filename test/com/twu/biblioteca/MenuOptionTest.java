@@ -14,8 +14,6 @@ public class MenuOptionTest {
     Book bookProgrammingInJava = new Book("Programming in Java", "Gabriela Andrade", 2005);
     Book bookProgrammingInCSharp = new Book("Programming in C#", "Gabriela Andrade", 2006);
     Book bookTDD = new Book("Test Driven Development", "Gabriela Andrade", 2007);
-    MenuOption yes;
-    MenuOption no;
     String testOption = "Test option";
     String testTitle = "Test title";
     String testMessage = "Test message";
@@ -174,7 +172,7 @@ public class MenuOptionTest {
         String expectedChildren = "YY: Yes.NN: No.BackBack: Go back to previous menu.QuitQuit: Exit Biblioteca.";
 
         assertEquals(expectedOption + expectedTitle + expectedMessage + expectedParentMessage + expectedChildren,
-                library.navigateToOption(library.menu, inputs).toString());
+                navigateToOption(library.menu, inputs).toString());
     }
 
     @Test
@@ -188,15 +186,20 @@ public class MenuOptionTest {
         String expectedChildren = "QuitQuit: Exit Biblioteca.11: List Books.";
 
         assertEquals(expectedOption + expectedTitle + expectedMessage + expectedParentMessage + expectedChildren,
-                library.navigateToOption(library.menu, inputs).toString());
+                navigateToOption(library.menu, inputs).toString());
+    }
+
+    private MenuOption navigateToOption(MenuOption initialOption, LinkedList<String> inputs) {
+        if (inputs.size() == 0) return initialOption;
+        else {
+            String currentInput = inputs.pop();
+            return navigateToOption(initialOption.getOptionByUserInput(currentInput), inputs);
+        }
     }
 
     private void setUp() {
         setUpBiblioteca();
-        MenuOption listBooksOption = library.setUpOptionToListBooks();
-        library.menu.addOption(listBooksOption);
-        listBooksOption.addDefaultOptionsUsingParentInfo();
-        library.setUpOptionsInListOfBooks(listBooksOption, library.books);
+        library.setUpMenuOptions();
     }
 
     private void setUpBiblioteca() {
