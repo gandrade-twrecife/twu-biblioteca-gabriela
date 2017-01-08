@@ -15,7 +15,7 @@ public class BibliotecaApp {
     public BibliotecaApp(){}
 
     public String checkoutBook(Book book) {
-        if (book.checkout()) {
+        if (book.checkoutItem()) {
             return "Thank you! Enjoy the book.";
         }
         else {
@@ -24,7 +24,7 @@ public class BibliotecaApp {
     }
 
     public String returnBook(Book book) {
-        if (book.returnBook()) {
+        if (book.returnItem()) {
             return "Thank you for returning the book.";
         }
         else {
@@ -78,7 +78,7 @@ public class BibliotecaApp {
     private MenuOption setUpOptionToListBooks() {
         ArrayList<Book> books = getAvailableBooks();
         int amountOfBooks = books.size();
-        String listBooksOptionMessage = "There are no available books to checkout.";
+        String listBooksOptionMessage = "There are no available books to checkoutItem.";
         if (amountOfBooks > 0) {
             int spacesToTheLeftOfHeaders = ((Integer)amountOfBooks).toString().length() + 2;
             String columnsHeader = addCharsToTheRight("", spacesToTheLeftOfHeaders, ' ')
@@ -99,7 +99,7 @@ public class BibliotecaApp {
         for (int i = 0; i < books.size(); i++) {
             String bookOptionTitle = BibliotecaApp.formatNumbersEqualStringSize(i + 1, lengthOfBookIndexOptions) +
                     ": " + BibliotecaApp.showFormattedBook(books.get(i));
-            MenuOption bookOption = MenuOption.createMenuOption(((Integer)(i + 1)).toString(), bookOptionTitle, "Do you wish to checkout this book?");
+            MenuOption bookOption = MenuOption.createMenuOption(((Integer)(i + 1)).toString(), bookOptionTitle, "Do you wish to checkoutItem this book?");
             setUpBookOptions(bookOption, books.get(i));
             listBooksOption.addOption(bookOption);
             bookOption.addDefaultOptionsUsingParentInfo();

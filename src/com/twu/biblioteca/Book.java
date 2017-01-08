@@ -1,6 +1,6 @@
 package com.twu.biblioteca;
 
-public class Book {
+public class Book implements BibliotecaItem {
     private String title;
     private String author;
     private int year_published;
@@ -25,7 +25,7 @@ public class Book {
         this.borrowed = false;
     }
 
-    public boolean checkout() {
+    public boolean checkoutItem() {
         if (this.borrowed) {
             return false;
         }
@@ -33,7 +33,7 @@ public class Book {
         return true;
     }
 
-    public boolean returnBook() {
+    public boolean returnItem() {
         if (!this.borrowed) {
             return false;
         }
@@ -43,9 +43,5 @@ public class Book {
 
     public boolean isBorrowed() {
         return borrowed;
-    }
-
-    public String bookDetails() {
-        return "Author: " + author + ", published in: " + year_published;
     }
 }

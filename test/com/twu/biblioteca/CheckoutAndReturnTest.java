@@ -26,9 +26,9 @@ public class CheckoutAndReturnTest {
         books.add(book2);
         books.add(book3);
         library.books = books;
-        books.get(0).checkout();
-        books.get(1).checkout();
-        books.get(2).checkout();
+        books.get(0).checkoutItem();
+        books.get(1).checkoutItem();
+        books.get(2).checkoutItem();
     }
 
     private void tearDown() {
@@ -39,7 +39,7 @@ public class CheckoutAndReturnTest {
     public void bookCheckoutTest() {
         setUpAvailableBooks();
         Book book = library.books.get(1);
-        boolean attemptToCheckout = book.checkout();
+        boolean attemptToCheckout = book.checkoutItem();
         assertTrue(attemptToCheckout);
         assertTrue(book.isBorrowed());
         tearDown();
@@ -49,7 +49,7 @@ public class CheckoutAndReturnTest {
     public void bookCheckoutBorrowedBookTest() {
         setUpBorrowedBooks();
         Book book = library.books.get(1);
-        boolean attemptToCheckout = book.checkout();
+        boolean attemptToCheckout = book.checkoutItem();
         assertFalse(attemptToCheckout);
         assertTrue(book.isBorrowed());
         tearDown();
@@ -59,7 +59,7 @@ public class CheckoutAndReturnTest {
     public void bookReturnTest() {
         setUpBorrowedBooks();
         Book book = library.books.get(1);
-        boolean attemptToReturn = book.returnBook();
+        boolean attemptToReturn = book.returnItem();
         assertTrue(attemptToReturn);
         assertFalse(book.isBorrowed());
         tearDown();
@@ -70,7 +70,7 @@ public class CheckoutAndReturnTest {
     public void bookReturnAvailableBookTest() {
         setUpAvailableBooks();
         Book book = library.books.get(1);
-        boolean attemptToReturn = book.returnBook();
+        boolean attemptToReturn = book.returnItem();
         assertFalse(attemptToReturn);
         assertFalse(book.isBorrowed());
         tearDown();

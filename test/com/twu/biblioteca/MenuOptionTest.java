@@ -164,7 +164,7 @@ public class MenuOptionTest {
         LinkedList<String> inputs = new LinkedList<String>(new LinkedList<String>(Arrays.asList("1","1")));
         String expectedOption = "1";
         String expectedTitle = "1: Programming in Java                                                   Gabriela Andrade                                  2005";
-        String expectedMessage = "Do you wish to checkout this book?";
+        String expectedMessage = "Do you wish to checkoutItem this book?";
         String expectedParentMessage = "The books available to check out are:\n" +
                 "   Title                                                                 Author                                            Year\n" +
                 "-------------------------------------------------------------------------------------------------------------------------------";

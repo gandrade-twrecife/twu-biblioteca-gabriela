@@ -14,7 +14,7 @@ public class ListingBooksTest {
     ArrayList<Book> borrowedBooks = new ArrayList<Book>();
 
     private void setUp() {
-        book1.checkout();
+        book1.checkoutItem();
         allBooks.add(book1);
         allBooks.add(book2);
         allBooks.add(book3);
