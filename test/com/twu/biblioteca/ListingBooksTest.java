@@ -9,12 +9,13 @@ public class ListingBooksTest {
     Book book1 = new Book("Programming in Java", "Gabriela Andrade", 2005);
     Book book2 = new Book("Programming in C#", "Gabriela Andrade", 2006);
     Book book3 = new Book("Test Driven Development", "Gabriela Andrade", 2007);
+    private User user = new User("Gabriela Andrade", "gandrade", "asdf");
     ArrayList<Book> allBooks = new ArrayList<Book>();
     ArrayList<Book> notBorrowedBooks = new ArrayList<Book>();
     ArrayList<Book> borrowedBooks = new ArrayList<Book>();
 
     private void setUp() {
-        book1.checkoutItem();
+        book1.checkoutItem(user.getLogin());
         allBooks.add(book1);
         allBooks.add(book2);
         allBooks.add(book3);

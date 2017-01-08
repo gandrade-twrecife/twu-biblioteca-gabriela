@@ -10,12 +10,13 @@ public class BibliotecaApp {
     public final String rootMessage = "Type what is before the colon (:) to select the option.";
     private static int sizeOfBookTitles = 70;
     private static int sizeOfBookAuthors = 50;
+    private User user = new User("Gabriela Andrade", "gandrade", "asdf");
     MenuOption menu = MenuOption.createMenuRoot(rootMessage);
 
     public BibliotecaApp(){}
 
     public String checkoutBook(Book book) {
-        if (book.checkoutItem()) {
+        if (book.checkoutItem(user.getLogin())) {
             return "Thank you! Enjoy the book.";
         }
         else {

@@ -10,6 +10,7 @@ public class CheckoutAndReturnTest {
     Book book1 = new Book("Programming in Java", "Gabriela Andrade", 2005);
     Book book2 = new Book("Programming in C#", "Gabriela Andrade", 2006);
     Book book3 = new Book("Test Driven Development", "Gabriela Andrade", 2007);
+    private User user = new User("Gabriela Andrade", "gandrade", "asdf");
     ArrayList<Book> books;
 
     private void setUpAvailableBooks() {
@@ -26,9 +27,9 @@ public class CheckoutAndReturnTest {
         books.add(book2);
         books.add(book3);
         library.books = books;
-        books.get(0).checkoutItem();
-        books.get(1).checkoutItem();
-        books.get(2).checkoutItem();
+        books.get(0).checkoutItem(user.getLogin());
+        books.get(1).checkoutItem(user.getLogin());
+        books.get(2).checkoutItem(user.getLogin());
     }
 
     private void tearDown() {
@@ -39,7 +40,7 @@ public class CheckoutAndReturnTest {
     public void bookCheckoutTest() {
         setUpAvailableBooks();
         Book book = library.books.get(1);
-        boolean attemptToCheckout = book.checkoutItem();
+        boolean attemptToCheckout = book.checkoutItem(user.getLogin());
         assertTrue(attemptToCheckout);
         assertTrue(book.isBorrowed());
         tearDown();
@@ -49,7 +50,7 @@ public class CheckoutAndReturnTest {
     public void bookCheckoutBorrowedBookTest() {
         setUpBorrowedBooks();
         Book book = library.books.get(1);
-        boolean attemptToCheckout = book.checkoutItem();
+        boolean attemptToCheckout = book.checkoutItem(user.getLogin());
         assertFalse(attemptToCheckout);
         assertTrue(book.isBorrowed());
         tearDown();
