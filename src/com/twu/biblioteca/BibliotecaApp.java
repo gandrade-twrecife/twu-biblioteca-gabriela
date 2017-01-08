@@ -1,6 +1,7 @@
 package com.twu.biblioteca;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class BibliotecaApp {
@@ -11,6 +12,7 @@ public class BibliotecaApp {
     public final String rootMessage = "Type what is before the colon (:) to select the option.";
     int sizeOfBookTitles = 70;
     int sizeOfBookAuthors = 50;
+    MenuOption menu = MenuOption.createMenuRoot(rootMessage);
 
     public BibliotecaApp(){}
 
@@ -182,6 +184,49 @@ public class BibliotecaApp {
         while(true) {
             String userInput = scanner.next();
             app.getOutputForThisInput(userInput);
+        }
+    }
+
+    public MenuOption setUpOptionToListBooks() {
+        int amountOfBooks = books.size();
+        String listBooksOptionMessage = "There are no available books to checkout.";
+        if (amountOfBooks > 0) {
+            int spacesToTheLeftOfHeaders = ((Integer)amountOfBooks).toString().length() + 2;
+            String columnsHeader = addCharsToTheRight("", spacesToTheLeftOfHeaders, ' ')
+                    + "Title";
+            columnsHeader = BibliotecaApp.addCharsToTheRight(columnsHeader, sizeOfBookTitles - 5, ' ');
+            columnsHeader += "Author";
+            columnsHeader = BibliotecaApp.addCharsToTheRight(columnsHeader, sizeOfBookAuthors - 6, ' ');
+            columnsHeader += "Year\n";
+            columnsHeader = BibliotecaApp.addCharsToTheRight(columnsHeader, spacesToTheLeftOfHeaders + sizeOfBookTitles + sizeOfBookAuthors + 4, '-');
+
+            listBooksOptionMessage = "The books available to check out are:\n" + columnsHeader;
+        }
+        return MenuOption.createMenuOption("1", "1: List Books.", listBooksOptionMessage);
+    }
+
+    public void setUpOptionsInListOfBooks(MenuOption listBooksOption, ArrayList<Book> books) {
+        int lengthOfBookIndexOptions = ((Integer)books.size()).toString().length();
+        for (int i = 0; i < books.size(); i++) {
+            String bookOptionTitle = BibliotecaApp.formatNumbersEqualStringSize(i + 1, lengthOfBookIndexOptions) +
+                    ": " + BibliotecaApp.showFormattedBook(books.get(i));
+            MenuOption bookOption = MenuOption.createMenuOption(((Integer)(i + 1)).toString(), bookOptionTitle, "Do you wish to checkout this book?");
+            setUpBookOptions(bookOption, books.get(i));
+            listBooksOption.addOption(bookOption);
+            bookOption.addDefaultOptionsUsingParentInfo();
+        }
+    }
+
+    private void setUpBookOptions(MenuOption bookOption, Book book) {
+        bookOption.addYesOption(menu, checkoutBook(book));
+        bookOption.addNoOption(menu);
+    }
+
+    public MenuOption navigateToOption(MenuOption initialOption, LinkedList<String> inputs) {
+        if (inputs.size() == 0) return initialOption;
+        else {
+            String currentInput = inputs.pop();
+            return navigateToOption(initialOption.getOptionByUserInput(currentInput), inputs);
         }
     }
 }

@@ -16,53 +16,52 @@ public class MenuOption {
     public MenuOption getParent(){return parent;}
     public ArrayList<MenuOption> getChildOptions(){return childOptions;}
 
-    private MenuOption (String option, String title, String messageBeforeUserInput, boolean addDefaultOptions) {
+    private MenuOption (String option, String title, String messageBeforeUserInput) {
         this.option = option;
         this.title = title;
         this.messageBeforeUserInput = messageBeforeUserInput;
-
-        if (addDefaultOptions) addDefaultOptions();
     }
 
     public static MenuOption createMenuOption(String option, String title, String messageBeforeUserInput) {
-        return new MenuOption(option, title, messageBeforeUserInput, true);
+        return new MenuOption(option, title, messageBeforeUserInput);
     }
 
     public static MenuOption createMenuRoot(String messageBeforeUserInput) {
-        MenuOption rootOption = new MenuOption(null, null, messageBeforeUserInput, false);
+        MenuOption rootOption = new MenuOption(null, null, messageBeforeUserInput);
         rootOption.addOption(createQuitOption());
         return rootOption;
     }
 
     public static MenuOption createMenuOptionFromOtherOption(MenuOption otherOption) {
-        return new MenuOption(otherOption.option, otherOption.title, otherOption.messageBeforeUserInput, false);
+        return new MenuOption(otherOption.option, otherOption.title, otherOption.messageBeforeUserInput);
     }
 
     public void addYesOption(MenuOption optionToGo, String returnMessage) {
         String messageBeforeUserInput = returnMessage + "\n" + optionToGo.messageBeforeUserInput;
-        MenuOption yesOption = new MenuOption("Y", "Y: Yes.", messageBeforeUserInput, false);
+        MenuOption yesOption = new MenuOption("Y", "Y: Yes.", messageBeforeUserInput);
         yesOption.parent = optionToGo.parent;
         yesOption.childOptions = optionToGo.childOptions;
         this.childOptions.add(yesOption);
     }
 
     public void addNoOption(MenuOption optionToGo) {
-        MenuOption noOption = new MenuOption("N", "N: No.", optionToGo.messageBeforeUserInput, false);
+        MenuOption noOption = new MenuOption("N", "N: No.", optionToGo.messageBeforeUserInput);
         noOption.parent = optionToGo.parent;
         noOption.childOptions = optionToGo.childOptions;
         this.childOptions.add(noOption);
     }
 
-    private MenuOption createBackOption() {
-        MenuOption backOption = new MenuOption("Back", "Back: Go back to previous menu.", messageBeforeUserInput, false);
-        backOption.parent = this;
-        backOption.childOptions = childOptions;
-
-        return backOption;
+    private void addBackOption() {
+        if (parent != null) {
+            MenuOption backOption = new MenuOption("Back", "Back: Go back to previous menu.", parent.messageBeforeUserInput);
+            backOption.parent = this.getParent().getParent();
+            backOption.childOptions = parent.childOptions;
+            childOptions.add(backOption);
+        }
     }
 
     private static MenuOption createQuitOption() {
-        return new MenuOption("Quit", "Quit: Exit Biblioteca.", null, false);
+        return new MenuOption("Quit", "Quit: Exit Biblioteca.", null);
     }
 
     public void addOption(MenuOption option) {
@@ -78,7 +77,8 @@ public class MenuOption {
             }
         }
         MenuOption optionNotFound = createMenuOptionFromOtherOption(parent);
-        optionNotFound.messageBeforeUserInput = "Select a valid option!\n" + optionNotFound.messageBeforeUserInput;
+        if (!optionNotFound.messageBeforeUserInput.contains("Select a valid option!"))
+            optionNotFound.messageBeforeUserInput = "Select a valid option!\n" + optionNotFound.messageBeforeUserInput;
         return optionNotFound;
     }
 
@@ -108,8 +108,8 @@ public class MenuOption {
         return asString;
     }
 
-    private void addDefaultOptions() {
-        this.addOption(createBackOption());
+    public void addDefaultOptionsUsingParentInfo() {
+        this.addBackOption();
         this.addOption(createQuitOption());
     }
 
