@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class BibliotecaApp {
 
-    Scanner input = new Scanner(System.in);
     public ArrayList<Book> books = new ArrayList<Book>();
     public final String welcomeMessage = "Welcome to the Biblioteca!";
     public final String rootMessage = "Type what is before the colon (:) to select the option.";
@@ -77,6 +76,7 @@ public class BibliotecaApp {
     }
 
     private MenuOption setUpOptionToListBooks() {
+        ArrayList<Book> books = getAvailableBooks();
         int amountOfBooks = books.size();
         String listBooksOptionMessage = "There are no available books to checkout.";
         if (amountOfBooks > 0) {
@@ -113,6 +113,7 @@ public class BibliotecaApp {
 
     public void setUpMenuOptions() {
         MenuOption listBooksOption = setUpOptionToListBooks();
+        //MenuOption listBooksToReturnOption = setUpOptionToListBooksToReturn();
         menu.addOption(listBooksOption);
         listBooksOption.addDefaultOptionsUsingParentInfo();
         setUpOptionsInListOfBooks(listBooksOption, books);
