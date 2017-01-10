@@ -14,9 +14,4 @@ public class BibliotecaTest {
     Book bookTDD = new Book("Test Driven Development", "Gabriela Andrade", 2007);
 
 
-    @Test
-    public void showFormattedBookTest() {
-        String expected = "Programming in Java                                                   Gabriela Andrade                                  2005";
-        assertEquals(expected, library.showFormattedBook(bookProgrammingInJava));
-    }
 }

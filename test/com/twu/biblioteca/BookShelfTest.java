@@ -4,11 +4,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class BookShelfTest {
-    BookShelf books;
-    final Book bookJava = new Book("Programming in Java", "Gabriela Andrade", 2005);
-    final Book bookCSharp = new Book("Programming in C#", "Gabriela Andrade", 2006);
-    final Book bookTDD = new Book("Test Driven Development", "Gabriela Andrade", 2007);
-    final String userLogin = "gandrade";
+    private BookShelf books;
+    private final Book bookJava = new Book("Programming in Java", "Gabriela Andrade", 2005);
+    private final Book bookCSharp = new Book("Programming in C#", "Gabriela Andrade", 2006);
+    private final Book bookTDD = new Book("Test Driven Development", "Gabriela Andrade", 2007);
+    private final String userLogin = "gandrade";
 
     private void setUp() {
         books = new BookShelf();
@@ -84,5 +84,12 @@ public class BookShelfTest {
         books.checkoutItem(userLogin, bookJava);
         books.checkoutItem(userLogin, bookCSharp);
         assertEquals(2, books.getBorrowedItemsByUser(userLogin).size());
+    }
+
+    @Test
+    public void showFormattedBookTest() {
+        setUp();
+        String expected = "Programming in Java                                                   Gabriela Andrade                                  2005";
+        assertEquals(expected, books.formatItemToShowInList(bookJava));
     }
 }

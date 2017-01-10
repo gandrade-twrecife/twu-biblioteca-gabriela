@@ -9,6 +9,7 @@ public class BookShelf implements BibliotecaItemShelf {
     public String itemTypeError = "This item does not belong to this shelf.";
     public String successfulReturnResponse = "Thank you for returning the book.";
     public String unsuccessfulReturnResponse = "That is not a valid book to return.";
+    public static String noBooksAvailableMessage = "There are no available movies to checkout.";
     private static int sizeOfBookTitles = 70;
     private static int sizeOfBookAuthors = 50;
 
@@ -69,15 +70,30 @@ public class BookShelf implements BibliotecaItemShelf {
     }
 
     public String getHeader(){
-        return null;
+        int amountOfBooks = getAvailableItems().size();
+        String year = "Year";
+        String title = "Title";
+        String author = "Author";
+        if (amountOfBooks > 0) {
+            int spacesToTheLeftOfHeaders = ((Integer) (amountOfBooks + 1)).toString().length() + 2;
+
+            String columnsHeader = Utilities.repeatedCharacter(spacesToTheLeftOfHeaders, ' ')
+                    + title + Utilities.repeatedCharacter(sizeOfBookTitles - title.length(), ' ')
+                    + author + Utilities.repeatedCharacter(sizeOfBookAuthors - author.length(), ' ')
+                    + year + "\n" + Utilities.repeatedCharacter(
+                    spacesToTheLeftOfHeaders + sizeOfBookTitles + sizeOfBookAuthors + year.length(), '-');
+
+            return "The books available to check out are:\n" + columnsHeader;
+        }
+        return noBooksAvailableMessage;
     }
 
     public int getAmountOfItens() {
         return books.size();
     }
 
-    public void add(Book book) {
-        books.add(book);
+    public void add(BibliotecaItem book) {
+        books.add((Book) book);
     }
 
     public Book getBookByTitle(String title) {

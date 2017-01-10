@@ -17,4 +17,12 @@ public class Utilities {
         formattedNumber = Utilities.addCharsToTheRight(formattedNumber, zerosToAdd,' ');
         return formattedNumber;
     }
+
+    public static String repeatedCharacter(int size, char character) {
+        String wordWithRepeatedCharacter = "";
+        for (int i = 0; i < size; i++) {
+            wordWithRepeatedCharacter += character;
+        }
+        return wordWithRepeatedCharacter;
+    }
 }

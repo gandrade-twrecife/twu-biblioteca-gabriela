@@ -182,7 +182,12 @@ public class MenuOptionTest {
         String expectedTitle = "Back: Go back to previous menu.";
         String expectedMessage = "Type what is before the colon (:) to select the option.";
         String expectedParentMessage = "";
-        String expectedChildren = "QuitQuit: Exit Biblioteca.11: List Books.";
+        String quitOption = "QuitQuit: Exit Biblioteca.";
+        String listBooksOption = "11: List Books.";
+        String returnBooksOption = "22: Return Books.";
+        String listMoviesOption = "33: List Movies.";
+        String returnMoviesOption = "44: Return Movies.";
+        String expectedChildren = quitOption + listBooksOption + returnBooksOption + listMoviesOption + returnMoviesOption;
 
         assertEquals(expectedOption + expectedTitle + expectedMessage + expectedParentMessage + expectedChildren,
                 navigateToOption(library.menu, inputs).toString());
@@ -198,6 +203,7 @@ public class MenuOptionTest {
 
     private void setUp() {
         setUpBiblioteca();
+        library.user = new User("Gabriela Andrade", "gandrade", "asdf");
         library.setUpMenuOptions();
     }
 

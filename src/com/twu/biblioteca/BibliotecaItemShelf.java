@@ -10,4 +10,5 @@ public interface BibliotecaItemShelf {
     public String formatItemToShowInList(BibliotecaItem item);
     public String getHeader();
     public int getAmountOfItens();
+    public void add(BibliotecaItem item);
 }
