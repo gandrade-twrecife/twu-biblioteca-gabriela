@@ -2,13 +2,12 @@ package com.twu.biblioteca;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import static org.junit.Assert.*;
 
-public class MenuOptionTest {
-    MenuOption menu;
+public class PredefinedMenuOptionTest {
+    PredefinedMenuOption menu;
     BibliotecaApp library = new BibliotecaApp();
     Book bookProgrammingInJava = new Book("Programming in Java", "Gabriela Andrade", 2005);
     Book bookProgrammingInCSharp = new Book("Programming in C#", "Gabriela Andrade", 2006);
@@ -19,7 +18,7 @@ public class MenuOptionTest {
 
     @Test
     public void createRootMenuTest() {
-        MenuOption rootMenu = MenuOption.createMenuRoot("Root menu test");
+        PredefinedMenuOption rootMenu = PredefinedMenuOption.createMenuRoot("Root menu test");
         assertEquals("Root menu test", rootMenu.getMessageBeforeUserInput());
         assertTrue(rootMenu.getParent() == null);
         assertEquals(1, rootMenu.getChildOptions().size());
@@ -27,7 +26,7 @@ public class MenuOptionTest {
 
     @Test
     public void setRootMenuTest() {
-        MenuOption menu = MenuOption.createMenuRoot(library.rootMessage);
+        PredefinedMenuOption menu = PredefinedMenuOption.createMenuRoot(library.rootMessage);
         assertEquals(library.rootMessage, menu.getMessageBeforeUserInput());
         assertTrue(menu.getParent() == null);
         assertEquals(1, menu.getChildOptions().size());
@@ -35,20 +34,20 @@ public class MenuOptionTest {
 
     @Test
     public void createOptionTest() {
-        MenuOption menuOption = MenuOption.createMenuOption(testOption, testTitle, testMessage);
+        PredefinedMenuOption predefinedMenuOption = PredefinedMenuOption.createMenuOption(testOption, testTitle, testMessage);
 
-        assertEquals(testOption, menuOption.getOption());
-        assertEquals(testTitle, menuOption.getTitle());
-        assertEquals(testMessage, menuOption.getMessageBeforeUserInput());
-        assertTrue(menuOption.getParent() == null);
-        assertEquals(0, menuOption.getChildOptions().size());
+        assertEquals(testOption, predefinedMenuOption.getOption());
+        assertEquals(testTitle, predefinedMenuOption.getTitle());
+        assertEquals(testMessage, predefinedMenuOption.getMessageBeforeUserInput());
+        assertTrue(predefinedMenuOption.getParent() == null);
+        assertEquals(0, predefinedMenuOption.getChildOptions().size());
     }
 
     @Test
     public void addOptionToMenuTest() {
-        MenuOption menu = MenuOption.createMenuRoot(library.rootMessage);
+        PredefinedMenuOption menu = PredefinedMenuOption.createMenuRoot(library.rootMessage);
 
-        MenuOption childOption = MenuOption.createMenuOption(testOption, testTitle, testMessage);
+        PredefinedMenuOption childOption = PredefinedMenuOption.createMenuOption(testOption, testTitle, testMessage);
         menu.addOption(childOption);
 
         assertTrue(childOption.getParent() == menu);
@@ -57,9 +56,9 @@ public class MenuOptionTest {
 
     @Test
     public void addOptionToOptionTest() {
-        MenuOption menu = MenuOption.createMenuRoot(library.rootMessage);
+        PredefinedMenuOption menu = PredefinedMenuOption.createMenuRoot(library.rootMessage);
 
-        MenuOption childOption = MenuOption.createMenuOption(testOption, testTitle, testMessage);
+        PredefinedMenuOption childOption = PredefinedMenuOption.createMenuOption(testOption, testTitle, testMessage);
         childOption.addOption(childOption);
         menu.addOption(childOption);
         childOption.addDefaultOptionsUsingParentInfo();
@@ -71,10 +70,10 @@ public class MenuOptionTest {
 
     @Test
     public void optionToStringTest() {
-        MenuOption menu = MenuOption.createMenuRoot(library.rootMessage);
+        PredefinedMenuOption menu = PredefinedMenuOption.createMenuRoot(library.rootMessage);
 
-        MenuOption childOption1 = MenuOption.createMenuOption(testOption+"1", testTitle+"1", testMessage+"1");
-        MenuOption childOption2 = MenuOption.createMenuOption(testOption+"2", testTitle+"2", testMessage+"2");
+        PredefinedMenuOption childOption1 = PredefinedMenuOption.createMenuOption(testOption+"1", testTitle+"1", testMessage+"1");
+        PredefinedMenuOption childOption2 = PredefinedMenuOption.createMenuOption(testOption+"2", testTitle+"2", testMessage+"2");
         childOption1.addOption(childOption2);
         childOption2.addDefaultOptionsUsingParentInfo();
         menu.addOption(childOption1);
@@ -88,16 +87,16 @@ public class MenuOptionTest {
 
     @Test
     public void addYesOptionGoingToMenuTest() {
-        MenuOption menu = MenuOption.createMenuRoot(library.rootMessage);
+        PredefinedMenuOption menu = PredefinedMenuOption.createMenuRoot(library.rootMessage);
 
         String yesOptionReturnMessage = "Typed yes";
 
-        MenuOption childOption = MenuOption.createMenuOption(testOption, testTitle, testMessage);
+        PredefinedMenuOption childOption = PredefinedMenuOption.createMenuOption(testOption, testTitle, testMessage);
         childOption.addYesOption(menu, yesOptionReturnMessage);
         menu.addOption(childOption);
         String expected = "YY: Yes." + yesOptionReturnMessage + "\n" + menu.getMessageBeforeUserInput();
         for (int i = 0; i < menu.getChildOptions().size(); i++) {
-            MenuOption menuChild = menu.getChildOptions().get(i);
+            PredefinedMenuOption menuChild = menu.getChildOptions().get(i);
             expected += menuChild.getOption() + menuChild.getTitle();
         }
 
@@ -106,18 +105,18 @@ public class MenuOptionTest {
 
     @Test
     public void addYesOptionGoingToOtherOptionTest() {
-        MenuOption menu = MenuOption.createMenuRoot(library.rootMessage);
+        PredefinedMenuOption menu = PredefinedMenuOption.createMenuRoot(library.rootMessage);
 
         String yesOptionReturnMessage = "Typed yes";
 
-        MenuOption childOption1 = MenuOption.createMenuOption(testOption+"1", testTitle+"1", testMessage+"1");
-        MenuOption childOption2 = MenuOption.createMenuOption(testOption+"2", testTitle+"2", testMessage+"2");
+        PredefinedMenuOption childOption1 = PredefinedMenuOption.createMenuOption(testOption+"1", testTitle+"1", testMessage+"1");
+        PredefinedMenuOption childOption2 = PredefinedMenuOption.createMenuOption(testOption+"2", testTitle+"2", testMessage+"2");
         childOption1.addOption(childOption2);
         childOption2.addYesOption(childOption1, yesOptionReturnMessage);
         menu.addOption(childOption1);
         String expected = "YY: Yes." + yesOptionReturnMessage + "\n" + childOption1.getMessageBeforeUserInput();
         for (int i = 0; i < childOption1.getChildOptions().size(); i++) {
-            MenuOption menuChild = childOption1.getChildOptions().get(i);
+            PredefinedMenuOption menuChild = childOption1.getChildOptions().get(i);
             expected += menuChild.getOption() + menuChild.getTitle();
         }
 
@@ -126,14 +125,14 @@ public class MenuOptionTest {
 
     @Test
     public void addNoOptionGoingToMenuTest() {
-        MenuOption menu = MenuOption.createMenuRoot(library.rootMessage);
+        PredefinedMenuOption menu = PredefinedMenuOption.createMenuRoot(library.rootMessage);
 
-        MenuOption childOption = MenuOption.createMenuOption(testOption, testTitle, testMessage);
+        PredefinedMenuOption childOption = PredefinedMenuOption.createMenuOption(testOption, testTitle, testMessage);
         childOption.addNoOption(menu);
         menu.addOption(childOption);
         String expected = "NN: No." + menu.getMessageBeforeUserInput();
         for (int i = 0; i < menu.getChildOptions().size(); i++) {
-            MenuOption menuChild = menu.getChildOptions().get(i);
+            PredefinedMenuOption menuChild = menu.getChildOptions().get(i);
             expected += menuChild.getOption() + menuChild.getTitle();
         }
 
@@ -142,16 +141,16 @@ public class MenuOptionTest {
 
     @Test
     public void addNoOptionGoingToOtherOptionTest() {
-        MenuOption menu = MenuOption.createMenuRoot(library.rootMessage);
+        PredefinedMenuOption menu = PredefinedMenuOption.createMenuRoot(library.rootMessage);
 
-        MenuOption childOption1 = MenuOption.createMenuOption(testOption+"1", testTitle+"1", testMessage+"1");
-        MenuOption childOption2 = MenuOption.createMenuOption(testOption+"2", testTitle+"2", testMessage+"2");
+        PredefinedMenuOption childOption1 = PredefinedMenuOption.createMenuOption(testOption+"1", testTitle+"1", testMessage+"1");
+        PredefinedMenuOption childOption2 = PredefinedMenuOption.createMenuOption(testOption+"2", testTitle+"2", testMessage+"2");
         childOption1.addOption(childOption2);
         childOption2.addNoOption(childOption1);
         menu.addOption(childOption1);
         String expected = "NN: No." + childOption1.getMessageBeforeUserInput();
         for (int i = 0; i < childOption1.getChildOptions().size(); i++) {
-            MenuOption menuChild = childOption1.getChildOptions().get(i);
+            PredefinedMenuOption menuChild = childOption1.getChildOptions().get(i);
             expected += menuChild.getOption() + menuChild.getTitle();
         }
 
@@ -193,7 +192,7 @@ public class MenuOptionTest {
                 navigateToOption(library.menu, inputs).toString());
     }
 
-    private MenuOption navigateToOption(MenuOption initialOption, LinkedList<String> inputs) {
+    private PredefinedMenuOption navigateToOption(PredefinedMenuOption initialOption, LinkedList<String> inputs) {
         if (inputs.size() == 0) return initialOption;
         else {
             String currentInput = inputs.pop();

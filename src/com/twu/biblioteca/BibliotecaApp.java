@@ -10,46 +10,46 @@ public class BibliotecaApp {
     public static String welcomeMessage = "Welcome to the Biblioteca!";
     public static String rootMessage = "Type what is before the colon (:) to select the option.";
     public User user;
-    MenuOption menu = MenuOption.createMenuRoot(rootMessage);
+    PredefinedMenuOption menu = PredefinedMenuOption.createMenuRoot(rootMessage);
 
     public BibliotecaApp(){}
 
-    private MenuOption setUpOptionToListBooks() {
-        return MenuOption.createMenuOption("1", "1: List Books.", bookShelf.getHeader());
+    private PredefinedMenuOption setUpOptionToListBooks() {
+        return PredefinedMenuOption.createMenuOption("1", "1: List Books.", bookShelf.getHeader());
     }
 
-    private MenuOption setUpOptionToReturnBooks() {
-        return MenuOption.createMenuOption("2", "2: Return Books.", bookShelf.getHeader());
+    private PredefinedMenuOption setUpOptionToReturnBooks() {
+        return PredefinedMenuOption.createMenuOption("2", "2: Return Books.", bookShelf.getHeader());
     }
 
-    private MenuOption setUpOptionToListMovies() {
-        return MenuOption.createMenuOption("3", "3: List Movies.", movieShelf.getHeader());
+    private PredefinedMenuOption setUpOptionToListMovies() {
+        return PredefinedMenuOption.createMenuOption("3", "3: List Movies.", movieShelf.getHeader());
     }
 
-    private MenuOption setUpOptionToReturnMovies() {
-        return MenuOption.createMenuOption("4", "4: Return Movies.", movieShelf.getHeader());
+    private PredefinedMenuOption setUpOptionToReturnMovies() {
+        return PredefinedMenuOption.createMenuOption("4", "4: Return Movies.", movieShelf.getHeader());
     }
 
-    private void setUpOptionsInListItems(BibliotecaItemShelf shelf, MenuOption listItemsOption,
+    private void setUpOptionsInListItems(BibliotecaItemShelf shelf, PredefinedMenuOption listItemsOption,
                                          ArrayList<? extends BibliotecaItem> items) {
         int lengthOfItemIndexOptions = ((Integer)items.size()).toString().length();
         for (int i = 0; i < items.size(); i++) {
             String optionTitle = Utilities.formatNumbersEqualStringSize(i + 1, lengthOfItemIndexOptions) +
                     ": " + shelf.formatItemToShowInList(items.get(i));
-            MenuOption option = MenuOption.createMenuOption(((Integer)(i + 1)).toString(), optionTitle, "Do you wish to checkout this item?");
+            PredefinedMenuOption option = PredefinedMenuOption.createMenuOption(((Integer)(i + 1)).toString(), optionTitle, "Do you wish to checkout this item?");
             setUpYesNoOptions(option, items.get(i));
             listItemsOption.addOption(option);
             option.addDefaultOptionsUsingParentInfo();
         }
     }
 
-    private void setUpYesNoOptions(MenuOption option, BibliotecaItem item) {
+    private void setUpYesNoOptions(PredefinedMenuOption option, BibliotecaItem item) {
         option.addYesOption(menu, bookShelf.checkoutItem(user.getLogin(), item));
         option.addNoOption(menu);
     }
 
     public void setUpMenuOptions() {
-        MenuOption[] options = new MenuOption[4];
+        PredefinedMenuOption[] options = new PredefinedMenuOption[4];
         options[0] = setUpOptionToListBooks();
         options[1] = setUpOptionToReturnBooks();
         options[2] = setUpOptionToListMovies();
