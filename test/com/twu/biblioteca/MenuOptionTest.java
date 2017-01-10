@@ -164,7 +164,7 @@ public class MenuOptionTest {
         LinkedList<String> inputs = new LinkedList<String>(new LinkedList<String>(Arrays.asList("1","1")));
         String expectedOption = "1";
         String expectedTitle = "1: Programming in Java                                                   Gabriela Andrade                                  2005";
-        String expectedMessage = "Do you wish to checkoutItem this book?";
+        String expectedMessage = "Do you wish to checkout this item?";
         String expectedParentMessage = "The books available to check out are:\n" +
                 "   Title                                                                 Author                                            Year\n" +
                 "-------------------------------------------------------------------------------------------------------------------------------";
@@ -202,9 +202,9 @@ public class MenuOptionTest {
     }
 
     private void setUpBiblioteca() {
-        library.books = new ArrayList<Book>();
-        library.books.add(bookProgrammingInJava);
-        library.books.add(bookProgrammingInCSharp);
-        library.books.add(bookTDD);
+        library.bookShelf = new BookShelf();
+        library.bookShelf.add(bookProgrammingInJava);
+        library.bookShelf.add(bookProgrammingInCSharp);
+        library.bookShelf.add(bookTDD);
     }
 }

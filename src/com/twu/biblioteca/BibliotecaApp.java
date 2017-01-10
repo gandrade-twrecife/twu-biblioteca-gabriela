@@ -5,16 +5,19 @@ import java.util.Scanner;
 
 public class BibliotecaApp {
 
-    public ArrayList<Book> books = new ArrayList<Book>();
-    public final String welcomeMessage = "Welcome to the Biblioteca!";
-    public final String rootMessage = "Type what is before the colon (:) to select the option.";
+    //public ArrayList<Book> books = new ArrayList<Book>();
+    public BookShelf bookShelf = new BookShelf();
+    public static String welcomeMessage = "Welcome to the Biblioteca!";
+    public static String rootMessage = "Type what is before the colon (:) to select the option.";
+    public static String listBooksOptionMessage = "There are no available books to checkout.";
+    private User user = new User("Gabriela Andrade", "gandrade", "asdf");
     private static int sizeOfBookTitles = 70;
     private static int sizeOfBookAuthors = 50;
-    private User user = new User("Gabriela Andrade", "gandrade", "asdf");
     MenuOption menu = MenuOption.createMenuRoot(rootMessage);
 
     public BibliotecaApp(){}
 
+    //OK
     public String checkoutBook(Book book) {
         if (book.checkoutItem(user.getLogin())) {
             return "Thank you! Enjoy the book.";
@@ -24,6 +27,7 @@ public class BibliotecaApp {
         }
     }
 
+    //OK
     public String returnBook(Book book) {
         if (book.returnItem()) {
             return "Thank you for returning the book.";
@@ -32,7 +36,8 @@ public class BibliotecaApp {
             return "That is not a valid book to return.";
         }
     }
-
+    /*
+    //OK
     public ArrayList<Book> getAvailableBooks() {
         ArrayList<Book> notBorrowedBooks = new ArrayList<Book>();
         if (books != null) {
@@ -43,64 +48,47 @@ public class BibliotecaApp {
             }
         }
         return notBorrowedBooks;
-    }
-
-    public static String addCharsToTheRight(String word, int amount, char character) {
-        StringBuffer output = new StringBuffer();
-        output.append(word);
-        for (int i = 0; i < amount; i++) {
-            output.append(character);
-        }
-        return output.toString();
-    }
+    }*/
 
     public static String showFormattedBook(Book book) {
         int sizeTitle = sizeOfBookTitles;
         int sizeAuthor = sizeOfBookAuthors;
 
         int spacesToAdd = (sizeTitle - book.getTitle().length());
-        String formattedBook = addCharsToTheRight(book.getTitle(), spacesToAdd, ' ');
+        String formattedBook = Utilities.addCharsToTheRight(book.getTitle(), spacesToAdd, ' ');
 
         spacesToAdd = (sizeAuthor - book.getAuthor().length());
-        formattedBook += addCharsToTheRight(book.getAuthor(), spacesToAdd, ' ');
+        formattedBook += Utilities.addCharsToTheRight(book.getAuthor(), spacesToAdd, ' ');
 
         formattedBook += book.getYearPublished();
 
         return formattedBook;
     }
 
-    public static String formatNumbersEqualStringSize(Integer numberToFormat, int stringLenght) {
-        String formattedNumber = numberToFormat.toString();
-        int zerosToAdd = (stringLenght - formattedNumber.length());
-        formattedNumber = addCharsToTheRight(formattedNumber, zerosToAdd,' ');
-        return formattedNumber;
-    }
-
     private MenuOption setUpOptionToListBooks() {
-        ArrayList<Book> books = getAvailableBooks();
+        ArrayList<Book> books = (ArrayList<Book>)bookShelf.getAvailableItems();
         int amountOfBooks = books.size();
-        String listBooksOptionMessage = "There are no available books to checkoutItem.";
         if (amountOfBooks > 0) {
             int spacesToTheLeftOfHeaders = ((Integer)amountOfBooks).toString().length() + 2;
-            String columnsHeader = addCharsToTheRight("", spacesToTheLeftOfHeaders, ' ')
+            String columnsHeader = Utilities.addCharsToTheRight("", spacesToTheLeftOfHeaders, ' ')
                     + "Title";
-            columnsHeader = BibliotecaApp.addCharsToTheRight(columnsHeader, sizeOfBookTitles - 5, ' ');
+            columnsHeader = Utilities.addCharsToTheRight(columnsHeader, sizeOfBookTitles - 5, ' ');
             columnsHeader += "Author";
-            columnsHeader = BibliotecaApp.addCharsToTheRight(columnsHeader, sizeOfBookAuthors - 6, ' ');
+            columnsHeader = Utilities.addCharsToTheRight(columnsHeader, sizeOfBookAuthors - 6, ' ');
             columnsHeader += "Year\n";
-            columnsHeader = BibliotecaApp.addCharsToTheRight(columnsHeader, spacesToTheLeftOfHeaders + sizeOfBookTitles + sizeOfBookAuthors + 4, '-');
+            columnsHeader = Utilities.addCharsToTheRight(columnsHeader, spacesToTheLeftOfHeaders + sizeOfBookTitles + sizeOfBookAuthors + 4, '-');
 
             listBooksOptionMessage = "The books available to check out are:\n" + columnsHeader;
         }
         return MenuOption.createMenuOption("1", "1: List Books.", listBooksOptionMessage);
     }
 
-    private void setUpOptionsInListOfBooks(MenuOption listBooksOption, ArrayList<Book> books) {
+    private void setUpOptionsInListBooks(MenuOption listBooksOption, ArrayList<Book> books) {
         int lengthOfBookIndexOptions = ((Integer)books.size()).toString().length();
         for (int i = 0; i < books.size(); i++) {
-            String bookOptionTitle = BibliotecaApp.formatNumbersEqualStringSize(i + 1, lengthOfBookIndexOptions) +
-                    ": " + BibliotecaApp.showFormattedBook(books.get(i));
-            MenuOption bookOption = MenuOption.createMenuOption(((Integer)(i + 1)).toString(), bookOptionTitle, "Do you wish to checkoutItem this book?");
+            String bookOptionTitle = Utilities.formatNumbersEqualStringSize(i + 1, lengthOfBookIndexOptions) +
+                    ": " + bookShelf.formatItemToShowInList(books.get(i));
+            MenuOption bookOption = MenuOption.createMenuOption(((Integer)(i + 1)).toString(), bookOptionTitle, "Do you wish to checkout this item?");
             setUpBookOptions(bookOption, books.get(i));
             listBooksOption.addOption(bookOption);
             bookOption.addDefaultOptionsUsingParentInfo();
@@ -117,7 +105,7 @@ public class BibliotecaApp {
         //MenuOption listBooksToReturnOption = setUpOptionToListBooksToReturn();
         menu.addOption(listBooksOption);
         listBooksOption.addDefaultOptionsUsingParentInfo();
-        setUpOptionsInListOfBooks(listBooksOption, books);
+        setUpOptionsInListBooks(listBooksOption, (ArrayList<Book>) bookShelf.getAvailableItems());
     }
 
     public static void main(String[] args) {
