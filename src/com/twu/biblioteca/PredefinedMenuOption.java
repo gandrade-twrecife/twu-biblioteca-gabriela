@@ -1,35 +1,41 @@
 package com.twu.biblioteca;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class PredefinedMenuOption implements MenuOptionInterface {
     private PredefinedMenuOption parent = null;
 
     private String option;
     private String title;
-    private String messageBeforeUserInput;
+    public String messageBeforeUserInput;
+    public static final String rootMessage = "Type the number or word before the colon (:) to select an option.\n";
+    public static final String quitOption = "Quit";
+    public static final String quitTitle = "Quit: Exit Biblioteca.";
+    public static final String backOption = "Back";
+    public static final String backTitle = "Back: Go back to previous menu.";
 
     public String getOption(){return option;}
     public String getTitle(){return title;}
     public String getMessageBeforeUserInput(){return messageBeforeUserInput;}
+    public void setMessageBeforeUserInput(String newMessage){
+        messageBeforeUserInput = newMessage;}
+
     public PredefinedMenuOption getParent(){return parent;}
 
     public static String invalidOptionMessage = "Select a valid option!";
 
-    public ArrayList<MenuOptionInterface> generateOptions() {
+    public ArrayList<MenuOptionInterface> generateOptions(BibliotecaItemShelf shelf, BibliotecaItem item, String userLogin) {
         ArrayList<MenuOptionInterface> childOptions = new ArrayList<MenuOptionInterface>();
-        //childOptions.add(new ListOfItemsMenuOption("1", "1: List Books."));
-        //childOptions.add(new ListOfItemsMenuOption("2", "2: Return Books."));
-        //childOptions.add(new ListOfItemsMenuOption("3", "3: List Movies."));
-        //childOptions.add(new ListOfItemsMenuOption("4", "4: Return Movies."));
-        childOptions.add(new PredefinedMenuOption("Quit", "Quit: Exit Biblioteca.", ""));
+        childOptions.add(new ListItemsMenuOption(ListItemsMenuOption.typeBooksToCheckout));
+        childOptions.add(new ListItemsMenuOption(ListItemsMenuOption.typeBooksToReturn));
+        childOptions.add(new ListItemsMenuOption(ListItemsMenuOption.typeMoviesToCheckout));
+        childOptions.add(new ListItemsMenuOption(ListItemsMenuOption.typeMoviesToReturn));
+        childOptions.add(createQuitOption());
         return childOptions;
     }
 
     public String printOptions(ArrayList<? extends MenuOptionInterface> options) {
-        String textToReturn = "Type the number or word before the colon (:) to select an option.\n";
+        String textToReturn = PredefinedMenuOption.rootMessage;
         for (int i = 0; i < options.size(); i++) {
             if (i != 0) textToReturn += "\n";
             textToReturn += options.get(i).getTitle();
@@ -37,7 +43,6 @@ public class PredefinedMenuOption implements MenuOptionInterface {
         return textToReturn;
     }
 
-    @Override
     public MenuOptionInterface getOptionByUserInput(String userInput, ArrayList<? extends MenuOptionInterface> options) {
         for (int i = 0; i < options.size(); i++) {
             MenuOptionInterface option = options.get(i);
@@ -45,7 +50,7 @@ public class PredefinedMenuOption implements MenuOptionInterface {
                 return option;
         }
         if (!messageBeforeUserInput.contains(invalidOptionMessage))
-            messageBeforeUserInput = invalidOptionMessage + "\n" + messageBeforeUserInput;
+            messageBeforeUserInput = invalidOptionMessage + "\n" + rootMessage;
         return this;
     }
 
@@ -55,8 +60,16 @@ public class PredefinedMenuOption implements MenuOptionInterface {
         this.messageBeforeUserInput = messageBeforeUserInput;
     }
 
+    public PredefinedMenuOption() {
+        messageBeforeUserInput = rootMessage;
+    }
+
     public static PredefinedMenuOption createQuitOption() {
-        return new PredefinedMenuOption("Quit", "Quit: Exit Biblioteca.", null);
+        return new PredefinedMenuOption(quitOption, quitTitle, null);
+    }
+
+    public static PredefinedMenuOption createBackOption() {
+        return new PredefinedMenuOption(backOption, backTitle, null);
     }
 
 }

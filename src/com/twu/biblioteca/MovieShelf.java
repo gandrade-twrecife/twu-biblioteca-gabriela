@@ -4,30 +4,9 @@ import java.util.ArrayList;
 
 public class MovieShelf implements BibliotecaItemShelf {
     ArrayList<Movie> movies = new ArrayList<Movie>();
-    public String successfulCheckoutResponse = "Thank you! Enjoy the movie.";
-    public String unsuccessfulCheckoutResponse = "That movie is not available.";
-    public String itemTypeError = "This item does not belong to this shelf.";
-    public String successfulReturnResponse = "Thank you for returning the movie.";
-    public String unsuccessfulReturnResponse = "That is not a valid movie to return.";
     public static String noBooksAvailableMessage = "There are no available movies to checkout.";
-    public static int sizeOfMovieNames = 60;
-    public static int sizeOfMovieDirectors = 40;
-
-    public String checkoutItem(String userLogin, BibliotecaItem movie){
-        if (movie instanceof Movie) {
-            if (movie.checkoutItem(userLogin)) return successfulCheckoutResponse;
-            else return unsuccessfulCheckoutResponse;
-        }
-        return itemTypeError;
-    }
-
-    public String returnItem(BibliotecaItem movie){
-        if (movie instanceof Movie) {
-            if (movie.returnItem()) return successfulReturnResponse;
-            else return unsuccessfulReturnResponse;
-        }
-        return itemTypeError;
-    }
+//    public static int sizeOfMovieNames = 60;
+//    public static int sizeOfMovieDirectors = 40;
 
     public ArrayList<? extends BibliotecaItem> getAvailableItems(){
         ArrayList<Movie> availableMovies = new ArrayList<Movie>();
@@ -53,21 +32,21 @@ public class MovieShelf implements BibliotecaItemShelf {
         return borrowedMovies;
     }
 
-    public String formatItemToShowInList(BibliotecaItem item) {
-        int sizeTitle = sizeOfMovieNames;
-        int sizeAuthor = sizeOfMovieDirectors;
-        Movie movie = (Movie)item;
-
-        int spacesToAdd = (sizeTitle - movie.getName().length());
-        String formattedMovie = Utilities.addCharsToTheRight(movie.getName(), spacesToAdd, ' ');
-
-        spacesToAdd = (sizeAuthor - movie.getDirector().length());
-        formattedMovie += Utilities.addCharsToTheRight(movie.getDirector(), spacesToAdd, ' ');
-
-        formattedMovie += movie.getYear() + " " + movie.getMovieRating();
-
-        return formattedMovie;
-    }
+//    public String formatItemToShowInList(BibliotecaItem item) {
+//        int sizeTitle = sizeOfMovieNames;
+//        int sizeAuthor = sizeOfMovieDirectors;
+//        Movie movie = (Movie)item;
+//
+//        int spacesToAdd = (sizeTitle - movie.getName().length());
+//        String formattedMovie = Utilities.addCharsToTheRight(movie.getName(), spacesToAdd, ' ');
+//
+//        spacesToAdd = (sizeAuthor - movie.getDirector().length());
+//        formattedMovie += Utilities.addCharsToTheRight(movie.getDirector(), spacesToAdd, ' ');
+//
+//        formattedMovie += movie.getYear() + " " + movie.getMovieRating();
+//
+//        return formattedMovie;
+//    }
 
     public String getHeader(){
         int amountOfBooks = getAvailableItems().size();
@@ -79,11 +58,11 @@ public class MovieShelf implements BibliotecaItemShelf {
             int spacesToTheLeftOfHeaders = ((Integer) (amountOfBooks + 1)).toString().length() + 2;
 
             String columnsHeader = Utilities.repeatedCharacter(spacesToTheLeftOfHeaders, ' ')
-                    + name + Utilities.repeatedCharacter(sizeOfMovieNames - name.length(), ' ')
-                    + director + Utilities.repeatedCharacter(sizeOfMovieDirectors - director.length(), ' ')
+                    + name + Utilities.repeatedCharacter(Utilities.sizeOfMovieNames - name.length(), ' ')
+                    + director + Utilities.repeatedCharacter(Utilities.sizeOfMovieDirectors - director.length(), ' ')
                     + year + " "
                     + rating + "\n" + Utilities.repeatedCharacter(
-                    spacesToTheLeftOfHeaders + sizeOfMovieNames + sizeOfMovieDirectors + year.length() + 1 + rating.length(),
+                    spacesToTheLeftOfHeaders + Utilities.sizeOfMovieNames + Utilities.sizeOfMovieDirectors + year.length() + 1 + rating.length(),
                     '-');
 
             return "The movies available to check out are:\n" + columnsHeader;

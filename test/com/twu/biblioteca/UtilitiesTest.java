@@ -5,6 +5,8 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class UtilitiesTest {
+    private final Book bookJava = new Book("Programming in Java", "Gabriela Andrade", 2005);
+    private final Movie movieMononokeHime = new Movie("Mononoke Hime", 1997, "Hayao Miyazaki", 8);
 
     @Test
     public void formatNumbersToStringOfLenght1() {
@@ -31,5 +33,25 @@ public class UtilitiesTest {
         String original = "teste";
         String expected = original;
         assertEquals(expected, Utilities.addCharsToTheRight(original, 0, ' '));
+    }
+
+    @Test
+    public void showFormattedBookTest() {
+        String expected = bookJava.getTitle() +
+                Utilities.repeatedCharacter((Utilities.sizeOfBookTitles - bookJava.getTitle().length()), ' ') +
+                bookJava.getAuthor() +
+                Utilities.repeatedCharacter((Utilities.sizeOfBookAuthors - bookJava.getAuthor().length()), ' ') +
+                ((Integer)bookJava.getYearPublished()).toString();
+        assertEquals(expected, Utilities.formatItemToShowInList(bookJava));
+    }
+
+    @Test
+    public void showFormattedMovieTest() {
+        String expected = movieMononokeHime.getName() +
+                Utilities.repeatedCharacter((Utilities.sizeOfMovieNames - movieMononokeHime.getName().length()), ' ') +
+                movieMononokeHime.getDirector() +
+                Utilities.repeatedCharacter((Utilities.sizeOfMovieDirectors - movieMononokeHime.getDirector().length()), ' ') +
+                ((Integer)movieMononokeHime.getYear()).toString() + " " + ((Double)movieMononokeHime.getMovieRating()).toString();
+        assertEquals(expected, Utilities.formatItemToShowInList(movieMononokeHime));
     }
 }

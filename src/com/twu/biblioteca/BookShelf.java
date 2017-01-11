@@ -4,30 +4,9 @@ import java.util.ArrayList;
 
 public class BookShelf implements BibliotecaItemShelf {
     ArrayList<Book> books = new ArrayList<Book>();
-    public String successfulCheckoutResponse = "Thank you! Enjoy the book.";
-    public String unsuccessfulCheckoutResponse = "That book is not available.";
-    public String itemTypeError = "This item does not belong to this shelf.";
-    public String successfulReturnResponse = "Thank you for returning the book.";
-    public String unsuccessfulReturnResponse = "That is not a valid book to return.";
     public static String noBooksAvailableMessage = "There are no available movies to checkout.";
-    private static int sizeOfBookTitles = 70;
-    private static int sizeOfBookAuthors = 50;
-
-    public String checkoutItem(String userLogin, BibliotecaItem book){
-        if (book instanceof Book) {
-            if (book.checkoutItem(userLogin)) return successfulCheckoutResponse;
-            else return unsuccessfulCheckoutResponse;
-        }
-        return itemTypeError;
-    }
-
-    public String returnItem(BibliotecaItem book){
-        if (book instanceof Book) {
-            if (book.returnItem()) return successfulReturnResponse;
-            else return unsuccessfulReturnResponse;
-        }
-        return itemTypeError;
-    }
+//    private static int sizeOfBookTitles = 70;
+//    private static int sizeOfBookAuthors = 50;
 
     public ArrayList<? extends BibliotecaItem> getAvailableItems(){
         ArrayList<Book> availableBooks = new ArrayList<Book>();
@@ -53,21 +32,21 @@ public class BookShelf implements BibliotecaItemShelf {
         return borrowedBooks;
     }
 
-    public String formatItemToShowInList(BibliotecaItem item) {
-        int sizeTitle = sizeOfBookTitles;
-        int sizeAuthor = sizeOfBookAuthors;
-        Book book = (Book)item;
-
-        int spacesToAdd = (sizeTitle - book.getTitle().length());
-        String formattedBook = Utilities.addCharsToTheRight(book.getTitle(), spacesToAdd, ' ');
-
-        spacesToAdd = (sizeAuthor - book.getAuthor().length());
-        formattedBook += Utilities.addCharsToTheRight(book.getAuthor(), spacesToAdd, ' ');
-
-        formattedBook += book.getYearPublished();
-
-        return formattedBook;
-    }
+//    public String formatItemToShowInList(BibliotecaItem item) {
+//        int sizeTitle = sizeOfBookTitles;
+//        int sizeAuthor = sizeOfBookAuthors;
+//        Book book = (Book)item;
+//
+//        int spacesToAdd = (sizeTitle - book.getTitle().length());
+//        String formattedBook = Utilities.addCharsToTheRight(book.getTitle(), spacesToAdd, ' ');
+//
+//        spacesToAdd = (sizeAuthor - book.getAuthor().length());
+//        formattedBook += Utilities.addCharsToTheRight(book.getAuthor(), spacesToAdd, ' ');
+//
+//        formattedBook += book.getYearPublished();
+//
+//        return formattedBook;
+//    }
 
     public String getHeader(){
         int amountOfBooks = getAvailableItems().size();
@@ -78,10 +57,10 @@ public class BookShelf implements BibliotecaItemShelf {
             int spacesToTheLeftOfHeaders = ((Integer) (amountOfBooks + 1)).toString().length() + 2;
 
             String columnsHeader = Utilities.repeatedCharacter(spacesToTheLeftOfHeaders, ' ')
-                    + title + Utilities.repeatedCharacter(sizeOfBookTitles - title.length(), ' ')
-                    + author + Utilities.repeatedCharacter(sizeOfBookAuthors - author.length(), ' ')
+                    + title + Utilities.repeatedCharacter(Utilities.sizeOfBookTitles - title.length(), ' ')
+                    + author + Utilities.repeatedCharacter(Utilities.sizeOfBookAuthors - author.length(), ' ')
                     + year + "\n" + Utilities.repeatedCharacter(
-                    spacesToTheLeftOfHeaders + sizeOfBookTitles + sizeOfBookAuthors + year.length(), '-');
+                    spacesToTheLeftOfHeaders + Utilities.sizeOfBookTitles + Utilities.sizeOfBookAuthors + year.length(), '-');
 
             return "The books available to check out are:\n" + columnsHeader;
         }
